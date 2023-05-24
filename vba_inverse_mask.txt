@@ -1,0 +1,31 @@
+
+Press ALT + F11 to open the VBA editor.
+Click Insert from the menu, then click Module to create a new module.
+Paste the following code into the module:
+
+
+Function SubnetToWildcard(subnet As String) As String
+    Dim subnetParts() As String
+    subnetParts = Split(subnet, ".")
+    
+    If UBound(subnetParts) <> 3 Then
+        SubnetToWildcard = "Invalid subnet mask"
+        Exit Function
+    End If
+    
+    For i = 0 To 3
+        subnetParts(i) = CStr(255 - CInt(subnetParts(i)))
+    Next i
+    
+    SubnetToWildcard = Join(subnetParts, ".")
+End Function
+
+
+
+
+Press CTRL + S to save, then close the VBA editor by clicking the x button or pressing ALT + Q.
+Back in Excel, you can use the new function like this: =SubnetToWildcard(A1)
+This function will take a subnet mask from cell A1, convert it to a wildcard mask, and return the wildcard mask. 
+If the subnet mask is not valid, the function will return the error message "Invalid subnet mask". 
+This method should be much more reliable than trying to use a single complex formula.
+
