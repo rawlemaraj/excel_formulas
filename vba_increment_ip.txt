@@ -1,0 +1,25 @@
+Function IncrementIP(IP As String) As String
+    Dim ipParts() As String
+    Dim i As Integer
+    Dim newIP As String
+
+    ' Split the IP into its four parts
+    ipParts = Split(IP, ".")
+
+    ' Loop over the parts from right to left
+    For i = UBound(ipParts) To LBound(ipParts) Step -1
+        ' If the current part is less than 255, increment it and stop looping
+        If CInt(ipParts(i)) < 255 Then
+            ipParts(i) = CStr(CInt(ipParts(i)) + 1)
+            Exit For
+        ' If the current part is 255, set it to 0 and continue to the next part
+        Else
+            ipParts(i) = "0"
+        End If
+    Next i
+
+    ' Reassemble the new IP
+    newIP = Join(ipParts, ".")
+
+    IncrementIP = newIP
+End Function
